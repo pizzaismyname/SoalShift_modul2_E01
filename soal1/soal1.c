@@ -43,7 +43,7 @@ int main() {
             
             int stat;
             stat = rename(oldname, newname);
- 
+            
 //             if(stat == 0) printf("File renamed successfully.\n");
 //             else printf("Error: unable to rename the file.\n");
 
