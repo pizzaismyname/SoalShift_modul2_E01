@@ -70,7 +70,10 @@ int main(int argc, char **argv)
             stat(cwd, &info); // Error check omitted
             struct passwd *pw = getpwuid(info.st_uid);
             struct group *gr = getgrgid(info.st_gid);
-
+			
+			//Chmod 777
+			chmod(cwd, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH);
+			
             if (pw != 0)
             {
                 if (strcmp(pw->pw_name, "www-data") == 0)
