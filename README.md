@@ -154,10 +154,10 @@ while (1) {
     //...
 }
 ```
-- Mendapatkan waktu terakhir file makanan_enak.txt diakses
+- Mendapatkan waktu terakhir file makan_enak.txt diakses
 ```c
 struct stat info;
-stat("/home/rifqi/Documents/makanan/makanan_enak.txt", &info);
+stat("/home/rifqi/Documents/makanan/makan_enak.txt", &info);
 time_t file_atime = info.st_atime;
 ```
 - Mendapatkan waktu saat ini
@@ -181,7 +181,7 @@ counter++;
 ```
 
 ### Daemon
-- Daemon dijalankan pada directory yang berisi file makanan_enak.txt
+- Daemon dijalankan pada directory dimana file makan_sehat#.txt dibuat
 ```c
 if ((chdir("/home/rifqi/Documents/makanan")) < 0) {
         exit(EXIT_FAILURE);
@@ -249,7 +249,7 @@ for(i=1; i<=30; i++) {
 ```
 
 ### Daemon
-- Daemon dijalankan pada directory log-log yang dicopy dari /var/log/syslog
+- Daemon dijalankan pada directory dimana file log#.log dibuat
 ```c
 if ((chdir("/home/pristiz/log/")) < 0) {
         exit(EXIT_FAILURE);
