@@ -86,10 +86,26 @@ source code
 
 ## Soal 3
 ### Langkah
-penjelasan
+Untuk mengimplementasikan fork, pipe, dan exec, saya menggunakan saya menggunakan diagram seperti ini:
 ```
-source code
+    |Parent| 
+        |---> IF (args == ".zip")
+        |              |
+        |              V
+        |            FORK----------------> Wait----> EXEC(self,'job2',args)
+        |              |                     ^ 
+        |              |                     | 
+        |              |--> | exec(unzip) |--| 
+        |
+        |---> IF (args == "job2") 
+        |         |
+        |         |--> Reading File list --> exec(self,'job3',"file1.txt\nfile2.txt\n..")
+        |
+        |----> IF (args == "job3")
+                  |
+                  |--> fopen("daftar")--> fputs(argv)
 ```
+
 ### Langkah
 penjelasan
 ```
