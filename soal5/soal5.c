@@ -82,9 +82,12 @@ int main() {
                 char *lognum = strcat(logdir,num);
 
                 char *logfile = strcat(lognum,".log");
-                
+                                
+                char ch;
                 FILE *source, *target;
+
                 source = fopen("/var/log/syslog", "r");
+
                 target = fopen(logfile, "w+");
 
                 while ((ch = fgetc(source)) != EOF) fputc(ch, target);
