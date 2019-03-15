@@ -158,10 +158,7 @@ penjelasan
 source code
 ```
 
-## Soal 5
-### Mendapatkan waktu saat ini
-```c
-```
+## Soal 5a
 ### Child process
 Membuat directory dengan nama format nama waktu saat ini jika belum dibuat
 ```c
@@ -194,13 +191,27 @@ if (child_id == 0) {
 while ((wait(&status)) > 0);
 
 ```
-- 
+- Meng-copy isi file /var/log/syslog ke file baru sesuai kriteria pada soal
 ```c
+for(i=1; i<=30; i++) {
+    char log[100] = "/home/pristiz/log/";
+    char *logdir = strcat(log,dirname);
 
-```
-- 
-```c
+    char num[10];
+    sprintf(num,"log%d",i);
+    char *lognum = strcat(logdir,num);
+    char *logfile = strcat(lognum,".log");
 
+    char ch;
+    FILE *source, *target;
+    source = fopen("/var/log/syslog", "r");
+    target = fopen(logfile, "w+");
+
+    while ((ch = fgetc(source)) != EOF) fputc(ch, target);
+
+    fclose(source);
+    fclose(target);
+}
 ```
 
 ### Daemon
@@ -216,4 +227,20 @@ for(i=1; i<=30; i++) {
     // ...
     sleep(60);
 }
+```
+
+## Soal 5b
+### Mencari pid yang sesuai dengan nama proses hasil compile soal5a.c
+```c
+char line[100];
+FILE *command = popen("pidof soal5","r");
+
+fgets(line,100,command);
+
+pid_t pid = strtoul(line,NULL,10);
+pclose(command);
+```
+### Membunuh proses dengan pid tersebut
+```c
+kill(pid,SIGKILL);
 ```
