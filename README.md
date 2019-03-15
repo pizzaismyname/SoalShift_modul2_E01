@@ -1,16 +1,33 @@
 # SoalShift_modul2_E01
 
 ## Soal 1
-### Langkah
-penjelasan
+### Child process
+Membuat folder /home/pristiz/modul2/gambar/ jika belum dibuat
+```c
+pid_t child_id;
+child_id = fork();
+struct stat st = {0};
+if (child_id == 0) {
+  if(stat("/home/pristiz/modul2/gambar", &st) == -1){
+    char *argv[4] = {"mkdir", "-p", "/home/pristiz/modul2/gambar", NULL};
+    execv("/bin/mkdir", argv);
+  }
+  else return 0;
+}
 ```
-source code
+### Parent process
+- Membuka directory yang berisi gambar-gambar berekstensi .png
 ```
-### Langkah
-penjelasan
+char mydir[100] = "/home/pristiz/modul2/";
+DIR *dr = opendir(mydir);
 ```
-source code
+- Loop untuk mengecek seluruh file dan directory yang ada pada directory di atas
 ```
+while ((de = readdir(dr)) != NULL) {
+...
+}
+```
+- 
 
 ## Soal 2
 ### Langkah
