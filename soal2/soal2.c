@@ -5,22 +5,23 @@
 #include <limits.h>
 #include <unistd.h>
 #include <syslog.h>
-#include <cstdlib>
-#include <cstring>
-#include <iostream>
-#include <string>
-#include <fstream>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include <pwd.h>
 #include <grp.h>
 #include <sys/stat.h>
 
-using namespace std;
 char cwd[PATH_MAX];
 
-bool is_file_exist(const char *fileName)
-{
-    std::ifstream infile(fileName);
-    return infile.good();
+int is_file_exists(const char * filename){
+    /* try to open file to read */
+    FILE *file;
+    if (file = fopen(filename, "r")){
+        fclose(file);
+        return 1;
+    }
+    return 0;
 }
 
 int main(int argc, char **argv)
@@ -35,7 +36,8 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     getcwd(cwd, sizeof(cwd));
     strcat(cwd, "/hatiku/elen.ku");
-    cout << "Penghapus Kenangan Elen v0.1\nMengawasi file " << cwd << endl;
+    printf("Penghapus Kenangan Elen v0.1\n");
+    printf("Mengawasu file %s \n", cwd);
 
     pid = fork();
 
@@ -64,7 +66,7 @@ int main(int argc, char **argv)
 
     while (1)
     {
-        if (is_file_exist(cwd))
+        if (is_file_exists(cwd))
         {
             struct stat info;
             stat(cwd, &info); // Error check omitted
