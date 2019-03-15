@@ -264,7 +264,7 @@ for(i=1; i<=30; i++) {
 ```
 
 ## Soal 5b
-### Mencari pid yang sesuai dengan nama proses hasil compile soal5a.c
+- Mencari pid yang sesuai dengan nama proses hasil compile soal5a.c
 ```c
 char line[100];
 FILE *command = popen("pidof soal5","r");
@@ -274,7 +274,7 @@ fgets(line,100,command);
 pid_t pid = strtoul(line,NULL,10);
 pclose(command);
 ```
-### Membunuh proses dengan pid tersebut
+- Membunuh proses dengan pid tersebut
 ```c
 kill(pid,SIGKILL);
 ```
