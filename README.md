@@ -80,27 +80,71 @@ sleep(1);
 
 ## Soal 2
 ### Langkah
-penjelasan
+Aplikasi ini akan memonitor lokasi file /hatiku/elen.ku.
+Cara menggunakannya :
 ```
-source code
+$ ./soal2 ~
+Penghapus Kenangan Elen v0.1
+Mengawasi file /home/rifqi/hatiku/elen.ku
 ```
-### Langkah
-penjelasan
+Aplikasi ini akan menghapus file elen.ku jika owner dan grup sama dengan "www-data", dan melakukan `chmod(file, 777)` secara otomatis setiap 3 detik.
+
+#### Fungsi untuk memeriksa eksistensi file:
+```c
+int is_file_exists(const char * filename){
+    /* try to open file to read */
+    FILE *file;
+    if (file = fopen(filename, "r")){
+        fclose(file);
+        return 1;
+    }
+    return 0;
+}
 ```
-source code
+#### Cara mendapatkan owner, dan group file
+Jika owner dan grup sama dengan "www-data", maka `remove` file hatiku/elen.ku
+```c
+struct stat info;
+stat(cwd, &info); // Error check omitted
+struct passwd *pw = getpwuid(info.st_uid);
+struct group *gr = getgrgid(info.st_gid);
+if (pw != 0)
+{
+    if (strcmp(pw->pw_name, "www-data") == 0)
+    {
+        if (gr != 0)
+        {
+            if (strcmp(gr->gr_name, "www-data") == 0)
+            {
+                remove(cwd);
+            }
+        }
+    }
+}
 ```
 
 ## Soal 3
 ### Langkah
-penjelasan
+Untuk mengimplementasikan fork, pipe, dan exec, saya menggunakan saya menggunakan diagram seperti ini:
 ```
-source code
+    |Parent| 
+        |---> IF (args == ".zip")
+        |              |
+        |              V
+        |            FORK----------------> Wait----> EXEC(self,'job2',args)
+        |              |                     ^ 
+        |              |                     | 
+        |              |--> | exec(unzip) |--| 
+        |
+        |---> IF (args == "job2") 
+        |         |
+        |         |--> Reading File list --> exec(self,'job3',"file1.txt\nfile2.txt\n..")
+        |
+        |----> IF (args == "job3")
+                  |
+                  |--> fopen("daftar")--> fputs(argv)
 ```
-### Langkah
-penjelasan
-```
-source code
-```
+
 
 ## Soal 4
 ### Langkah
