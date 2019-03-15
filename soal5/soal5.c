@@ -95,7 +95,7 @@ int main() {
                 fclose(source);
                 fclose(target);
                 
-                sleep(1);
+                sleep(60);
             }
             
         }
