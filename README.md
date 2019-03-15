@@ -106,11 +106,6 @@ Untuk mengimplementasikan fork, pipe, dan exec, saya menggunakan saya menggunaka
                   |--> fopen("daftar")--> fputs(argv)
 ```
 
-### Langkah
-penjelasan
-```
-source code
-```
 
 ## Soal 4
 ### Langkah
