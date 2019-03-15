@@ -89,7 +89,7 @@ int main() {
             }
             closedir(dr);
             
-            sleep(3);
+            sleep(1);
         }
     }
     exit(EXIT_SUCCESS);
