@@ -16,6 +16,11 @@ if (child_id == 0) {
 }
 ```
 ### Parent process
+- Menunggu child process selesai
+```c
+while ((wait(&status)) > 0);
+
+```
 - Membuka directory yang berisi gambar-gambar berekstensi .png
 ```c
 char mydir[100] = "/home/pristiz/modul2/";
@@ -60,6 +65,7 @@ char *newname = strcat(tmpnew,grey);
 int stat;
 stat = rename(oldname, newname);
 ```
+
 ### Daemon
 - Daemon dijalankan pada directory yang berisi gambar-gambar berekstensi .png
 ```c
@@ -109,13 +115,61 @@ source code
 ```
 
 ## Soal 5
-### Langkah
-penjelasan
+### Mendapatkan waktu saat ini
+```c
 ```
-source code
+### Child process
+Membuat directory dengan nama format nama waktu saat ini jika belum dibuat
+```c
+pid_t child_id;
+child_id = fork();
+
+time_t now;
+time(&now);
+struct tm *local = localtime(&now);
+char dirname[100];
+strftime(dirname,100,"%d:%m:%Y-%H:%M/", local);
+
+char tmplog[100] = "/home/pristiz/log/";
+char *tlogdir = strcat(tmplog,dirname);
+
+struct stat st = {0};
+
+if (child_id == 0) {
+    if(stat(tlogdir, &st) == -1){
+        char *argv[4] = {"mkdir", "-p", tlogdir, NULL};
+        execv("/bin/mkdir", argv);
+    }
+    else return 0;
+}
+
 ```
-### Langkah
-penjelasan
+### Parent process
+- Menunggu child process selesai
+```c
+while ((wait(&status)) > 0);
+
 ```
-source code
+- 
+```c
+
+```
+- 
+```c
+
+```
+
+### Daemon
+- Daemon dijalankan pada directory log-log yang dicopy dari /var/log/syslog
+```c
+if ((chdir("/home/pristiz/log/")) < 0) {
+        exit(EXIT_FAILURE);
+}
+```
+- Menjalankan peng-copy-an file setiap 1 menit (diletakkan pada loop bagian dalam sehingga setiap setengah jam membuat directory baru)
+```c
+for(i=1; i<=30; i++) {
+    // ...
+    sleep(60);
+}
 ```
