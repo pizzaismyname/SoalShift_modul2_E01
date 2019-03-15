@@ -74,7 +74,7 @@ int main(int argc, char **argv)
             struct group *gr = getgrgid(info.st_gid);
 			
 			//Chmod 777
-			chmod(cwd, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH);
+			chmod(cwd, S_IRWXU | S_IRWXG | S_IRWXO);
 			
             if (pw != 0)
             {
