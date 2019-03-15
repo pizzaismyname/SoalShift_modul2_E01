@@ -47,7 +47,7 @@ int main()
     while (1)
     {
         struct stat info;
-        stat("/home/rifqi/Documents/makanan/makanan_enak.txt", &info);
+        stat("/home/rifqi/Documents/makanan/makan_enak.txt", &info);
         time_t file_atime = info.st_atime;
         time_t current = time(NULL);
         if (current - file_atime <= 30)
