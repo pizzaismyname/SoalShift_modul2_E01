@@ -60,6 +60,17 @@ char *newname = strcat(tmpnew,grey);
 int stat;
 stat = rename(oldname, newname);
 ```
+### Daemon
+- Daemon dijalankan pada directory yang berisi gambar-gambar berekstensi .png
+```c
+if ((chdir("/home/pristiz/modul2/")) < 0) {
+        exit(EXIT_FAILURE);
+}
+```
+- Menjalankannya secara otomatis (setiap 1 detik)
+```c
+sleep(1);
+```
 
 ## Soal 2
 ### Langkah
