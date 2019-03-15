@@ -147,15 +147,48 @@ Untuk mengimplementasikan fork, pipe, dan exec, saya menggunakan saya menggunaka
 
 
 ## Soal 4
-### Langkah
-penjelasan
+### Menginisialisasi counter nama file
+```c
+int counter = 1;
+while (1) {
+    //...
+}
 ```
-source code
+### Mendapatkan waktu terakhir file makanan_enak.txt diakses
+```c
+struct stat info;
+stat("/home/rifqi/Documents/makanan/makanan_enak.txt", &info);
+time_t file_atime = info.st_atime;
 ```
-### Langkah
-penjelasan
+### Mendapatkan waktu saat ini
+```c
+time_t current = time(NULL);
 ```
-source code
+### Mengecek jika waktu saat ini sudah lewat 30 menit dari waktu terakhir file diakses 
+```c
+if (current - file_atime <= 30)
+{
+    //...
+}
+```
+### Membuat file makan_sehat# (# sesuai counter) dan menambah counter
+```c
+char filename[FILENAME_MAX];
+sprintf(filename, "makan_sehat%d.txt", counter);
+FILE *file = fopen(filename, "w");
+fclose(file);
+counter++;
+```
+### Daemon
+- Daemon dijalankan pada directory yang berisi file makanan_enak.txt
+```c
+if ((chdir("/home/rifqi/Documents/makanan")) < 0) {
+        exit(EXIT_FAILURE);
+}
+```
+- Menjalankannya secara otomatis (setiap 5 detik)
+```c
+sleep(5);
 ```
 
 ## Soal 5a
