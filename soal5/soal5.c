@@ -11,6 +11,34 @@
 #include <time.h>
 
 int main() {
+    pid_t pid, sid;
+
+    pid = fork();
+
+    if (pid < 0) {
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid > 0) {
+        exit(EXIT_SUCCESS);
+    }
+
+    umask(0);
+
+    sid = setsid();
+
+    if (sid < 0) {
+        exit(EXIT_FAILURE);
+    }
+
+    if ((chdir("/home/pristiz/log/")) < 0) {
+        exit(EXIT_FAILURE);
+    }
+
+    close(STDIN_FILENO);
+    close(STDOUT_FILENO);
+    close(STDERR_FILENO);
+
     while(1) {
         pid_t child_id;
         int status;
@@ -44,9 +72,8 @@ int main() {
             while ((wait(&status)) > 0);
             
             int i;
-            
             for(i=1; i<=30; i++) {
-                printf("i: %d\n",i);
+                
                 char log[100] = "/home/pristiz/log/";
                 char *logdir = strcat(log,dirname);
 
@@ -55,43 +82,23 @@ int main() {
                 char *lognum = strcat(logdir,num);
 
                 char *logfile = strcat(lognum,".log");
-                
-                char *argv[4] = {"cp", "/var/log/syslog", logfile, NULL};
-                execv("/bin/cp", argv);
+                                
+                char ch, source_file[20], target_file[20];
+                FILE *source, *target;
+
+                source = fopen("/var/log/syslog", "r");
+
+                target = fopen(logfile, "w+");
+
+                while ((ch = fgetc(source)) != EOF) fputc(ch, target);
+
+                fclose(source);
+                fclose(target);
                 
                 sleep(1);
             }
             
         }
     }
-    pid_t pid, sid;
-
-    pid = fork();
-
-    if (pid < 0) {
-        exit(EXIT_FAILURE);
-    }
-
-    if (pid > 0) {
-        exit(EXIT_SUCCESS);
-    }
-
-    umask(0);
-
-    sid = setsid();
-
-    if (sid < 0) {
-        exit(EXIT_FAILURE);
-    }
-
-    if ((chdir("/home/pristiz/log/")) < 0) {
-        exit(EXIT_FAILURE);
-    }
-
-    close(STDIN_FILENO);
-    close(STDOUT_FILENO);
-    close(STDERR_FILENO);
-
-    
     exit(EXIT_SUCCESS);
 }
